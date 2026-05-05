@@ -97,7 +97,6 @@ export default function AdminPage() {
         imageUrl = await uploadImage(imageFile);
       }
 
-      // ✅ CORREÇÃO AQUI (aceita vírgula)
       const formattedPrice = Number(
         form.price.replace(/\./g, "").replace(",", ".")
       );
@@ -287,7 +286,15 @@ export default function AdminPage() {
 
                 <div className="flex-1">
                   <p className="font-semibold text-gray-700">{p.name}</p>
-                  <p className="text-pink-600 font-bold">R$ {p.price}</p>
+
+                  {/* ✅ CORREÇÃO AQUI */}
+                  <p className="text-pink-600 font-bold">
+                    R$ {p.price.toLocaleString("pt-BR", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </p>
+
                   <p className="text-xs text-gray-400">{p.category}</p>
 
                   {isOut && (
