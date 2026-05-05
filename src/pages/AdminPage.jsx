@@ -19,7 +19,7 @@ export default function AdminPage() {
     category: "ANEL",
     ref: "",
     code: "",
-    status: "disponivel", // ✅ ADICIONADO
+    status: "disponivel",
   });
 
   const [products, setProducts] = useState([]);
@@ -97,10 +97,15 @@ export default function AdminPage() {
         imageUrl = await uploadImage(imageFile);
       }
 
+      // ✅ CORREÇÃO AQUI (aceita vírgula)
+      const formattedPrice = Number(
+        form.price.replace(/\./g, "").replace(",", ".")
+      );
+
       if (editingId) {
         await updateDoc(doc(db, "products", editingId), {
           ...form,
-          price: Number(form.price),
+          price: formattedPrice,
           image: imageUrl,
         });
 
@@ -108,7 +113,7 @@ export default function AdminPage() {
       } else {
         await addDoc(collection(db, "products"), {
           ...form,
-          price: Number(form.price),
+          price: formattedPrice,
           image: imageUrl,
         });
 
@@ -121,7 +126,7 @@ export default function AdminPage() {
         category: "ANEL",
         ref: "",
         code: "",
-        status: "disponivel", // ✅ RESET
+        status: "disponivel",
       });
 
       setEditingId(null);
@@ -148,7 +153,7 @@ export default function AdminPage() {
   const handleEdit = (product) => {
     setForm({
       ...product,
-      status: product.status || "disponivel", // ✅ GARANTE COMPATIBILIDADE
+      status: product.status || "disponivel",
     });
     setEditingId(product.id);
     setPreview(product.image);
@@ -212,7 +217,6 @@ export default function AdminPage() {
             <option value="CONJUNTO">CONJUNTO</option>
           </select>
 
-          {/* ✅ NOVO STATUS */}
           <select
             value={form.status}
             onChange={(e) => setForm({ ...form, status: e.target.value })}
@@ -259,7 +263,6 @@ export default function AdminPage() {
         </form>
       </div>
 
-      {/* LISTA */}
       <div className="max-w-5xl mx-auto mt-6 px-4 pb-10">
 
         <h3 className="text-xl font-semibold mb-4 text-gray-700">
@@ -287,7 +290,6 @@ export default function AdminPage() {
                   <p className="text-pink-600 font-bold">R$ {p.price}</p>
                   <p className="text-xs text-gray-400">{p.category}</p>
 
-                  {/* 🔴 STATUS VISUAL */}
                   {isOut && (
                     <p className="text-xs text-red-500 font-semibold">
                       ESGOTADO
