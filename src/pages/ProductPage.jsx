@@ -46,11 +46,12 @@ export default function ProductPage() {
   // ⏳ LOADING
   if (loading) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen flex flex-col">
         <Header />
-        <div className="flex items-center justify-center h-[80vh]">
+        <div className="flex-1 flex items-center justify-center">
           <p>Carregando...</p>
         </div>
+        <Footer />
       </div>
     );
   }
@@ -58,11 +59,12 @@ export default function ProductPage() {
   // ❌ NÃO ENCONTRADO
   if (!product) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen flex flex-col">
         <Header />
-        <div className="flex items-center justify-center h-[80vh]">
+        <div className="flex-1 flex items-center justify-center">
           <p>Produto não encontrado</p>
         </div>
+        <Footer />
       </div>
     );
   }
@@ -71,10 +73,11 @@ export default function ProductPage() {
   const isOut = product.status === "esgotado";
 
   return (
-    <div className="min-h-screen bg-rose-200">
+    <div className="min-h-screen flex flex-col bg-rose-200">
       <Header />
 
-      <div className="flex items-center justify-center p-4">
+      {/* CONTEÚDO */}
+      <div className="flex-1 flex items-center justify-center p-4">
         <div className="bg-gray-100 w-full max-w-5xl flex flex-col md:flex-row rounded-md overflow-hidden mt-4">
           
           {/* IMAGEM */}
@@ -82,7 +85,9 @@ export default function ProductPage() {
             <img
               src={product.image}
               alt={product.name}
-              className={`w-full rounded ${isOut ? "opacity-60 grayscale" : ""}`}
+              className={`w-full h-[300px] object-contain rounded ${
+                isOut ? "opacity-60 grayscale" : ""
+              }`}
             />
           </div>
 

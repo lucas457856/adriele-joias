@@ -65,7 +65,7 @@ export default function Home() {
     loadProducts();
   }, []);
 
-  // 🔎 FILTRO (com status tratado)
+  // 🔎 FILTRO
   const filteredProducts = products.filter((p) => {
     const matchCategory =
       category === "ALL" || p.category === category;
@@ -101,7 +101,7 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-[#e7c6c6] overflow-x-hidden">
+    <div className="bg-[#e7c6c6] overflow-x-hidden">
       <Header />
 
       <div className="flex flex-col md:flex-row">
@@ -117,7 +117,7 @@ export default function Home() {
         </div>
 
         <div className="flex-1 px-2 md:px-10">
-          <div className="bg-white p-4 md:p-5 rounded-2xl shadow-sm mt-4">
+          <div className="bg-white p-4 md:p-5 rounded-2xl shadow-sm mt-4 min-h-[400px]">
 
             {/* MOBILE */}
             <div className="md:hidden mb-5 space-y-3">
@@ -154,7 +154,7 @@ export default function Home() {
                 <option value="COLAR">COLAR</option>
                 <option value="CONJUNTO">CONJUNTO</option>
                 <option value="PULSEIRA">PULSEIRA</option>
-                <option value="ACESSORIOS">ACESSÓRIOS</option> {/* ✅ NOVA */}
+                <option value="ACESSORIOS">ACESSÓRIOS</option>
               </select>
             </div>
 
@@ -165,6 +165,18 @@ export default function Home() {
               produtos encontrados
             </p>
 
+            {/* MENSAGEM SE NÃO TIVER PRODUTO */}
+            {sortedProducts.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-20 text-center">
+                <p className="text-lg font-semibold text-gray-600">
+                  Nenhum produto encontrado
+                </p>
+                <p className="text-sm text-gray-400 mt-2">
+                  Tente mudar a categoria ou a busca
+                </p>
+              </div>
+            )}
+
             {/* GRID */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
               {currentProducts.map((p) => (
@@ -172,32 +184,34 @@ export default function Home() {
               ))}
             </div>
 
-            {/* PAGINAÇÃO */}
-            <div className="flex justify-center items-center gap-3 mt-7">
-              <button
-                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                disabled={currentPage === 1}
-                className="px-4 py-2 border rounded-xl"
-              >
-                ⬅️
-              </button>
+            {/* PAGINAÇÃO (SÓ SE TIVER PRODUTO) */}
+            {sortedProducts.length > 0 && (
+              <div className="flex justify-center items-center gap-3 mt-7">
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 border rounded-xl"
+                >
+                  ⬅️
+                </button>
 
-              <span className="text-sm bg-gray-100 px-4 py-2 rounded-xl">
-                {currentPage} / {totalPages}
-              </span>
+                <span className="text-sm bg-gray-100 px-4 py-2 rounded-xl">
+                  {currentPage} / {totalPages}
+                </span>
 
-              <button
-                onClick={() =>
-                  setCurrentPage((p) =>
-                    Math.min(p + 1, totalPages)
-                  )
-                }
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 border rounded-xl"
-              >
-                ➡️
-              </button>
-            </div>
+                <button
+                  onClick={() =>
+                    setCurrentPage((p) =>
+                      Math.min(p + 1, totalPages)
+                    )
+                  }
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 border rounded-xl"
+                >
+                  ➡️
+                </button>
+              </div>
+            )}
 
           </div>
         </div>
