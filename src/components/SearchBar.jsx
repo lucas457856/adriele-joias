@@ -19,7 +19,7 @@ const SearchBar = ({
 }) => {
   return (
     <div className="w-[280px] bg-gray-100 p-4 rounded-lg text-sm">
-      
+
       {/* 🔎 PESQUISA */}
       <h3 className="font-semibold mb-2">Pesquisar</h3>
       <div className="flex mb-4">
@@ -73,6 +73,7 @@ const SearchBar = ({
         <option value="COLAR">COLAR</option>
         <option value="CONJUNTO">CONJUNTO</option>
         <option value="PULSEIRA">PULSEIRA</option>
+        <option value="ACESSORIOS">ACESSÓRIOS</option> {/* ✅ NOVA */}
       </select>
 
       {/* 📞 CONTATOS */}
@@ -80,30 +81,29 @@ const SearchBar = ({
         <h4 className="font-medium mb-2">CONSULTORES</h4>
 
         <div className="space-y-2">
-<a
-  href="https://wa.me/5585999288032"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="flex items-center gap-2 hover:underline"
->
-  <FaWhatsapp className="text-green-500" /> (85) 99928-8032
-</a>
+          <a
+            href="https://wa.me/5585999288032"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 hover:underline"
+          >
+            <FaWhatsapp className="text-green-500" /> (85) 99928-8032
+          </a>
+
           <p className="flex items-center gap-2">
             <FaPhone /> (85) 99928-8032
           </p>
-<a
-  href="https://www.instagram.com/adrielejoias__/"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="flex items-center gap-2 hover:underline"
->
-  <FaInstagram className="text-pink-500" /> @adrielejoias__
-</a>
 
+          <a
+            href="https://www.instagram.com/adrielejoias__/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 hover:underline"
+          >
+            <FaInstagram className="text-pink-500" /> @adrielejoias__
+          </a>
 
         </div>
-
-        
       </div>
     </div>
   );

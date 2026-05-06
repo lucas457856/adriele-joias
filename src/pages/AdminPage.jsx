@@ -214,6 +214,7 @@ export default function AdminPage() {
             <option value="COLAR">COLAR</option>
             <option value="PULSEIRA">PULSEIRA</option>
             <option value="CONJUNTO">CONJUNTO</option>
+            <option value="ACESSORIOS">ACESSÓRIOS</option> {/* ✅ NOVA */}
           </select>
 
           <select
@@ -255,8 +256,8 @@ export default function AdminPage() {
             {loading
               ? "Salvando..."
               : editingId
-              ? "Atualizar Produto"
-              : "Salvar Produto"}
+                ? "Atualizar Produto"
+                : "Salvar Produto"}
           </button>
 
         </form>

@@ -154,6 +154,7 @@ export default function Home() {
                 <option value="COLAR">COLAR</option>
                 <option value="CONJUNTO">CONJUNTO</option>
                 <option value="PULSEIRA">PULSEIRA</option>
+                <option value="ACESSORIOS">ACESSÓRIOS</option> {/* ✅ NOVA */}
               </select>
             </div>
 
