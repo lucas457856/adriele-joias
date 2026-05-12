@@ -29,6 +29,10 @@ export default function AdminPage() {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // 🔎 PESQUISA
+  const [search, setSearch] = useState("");
+  const [filterCategory, setFilterCategory] = useState("TODOS");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -154,9 +158,29 @@ export default function AdminPage() {
       ...product,
       status: product.status || "disponivel",
     });
+
     setEditingId(product.id);
     setPreview(product.image);
+
+    // 🔥 SOBE AUTOMATICAMENTE
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
+
+  // 🔎 FILTRO PESQUISA
+  const filteredProducts = products.filter((p) => {
+    const matchesSearch = p.name
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+    const matchesCategory =
+      filterCategory === "TODOS" ||
+      p.category === filterCategory;
+
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f8e7e7] to-[#f3dada]">
@@ -214,7 +238,7 @@ export default function AdminPage() {
             <option value="COLAR">COLAR</option>
             <option value="PULSEIRA">PULSEIRA</option>
             <option value="CONJUNTO">CONJUNTO</option>
-            <option value="ACESSORIOS">ACESSÓRIOS</option> {/* ✅ NOVA */}
+            <option value="ACESSORIOS">ACESSÓRIOS</option>
           </select>
 
           <select
@@ -269,9 +293,36 @@ export default function AdminPage() {
           📦 Produtos
         </h3>
 
+        {/* 🔎 PESQUISA */}
+        <div className="flex flex-col md:flex-row gap-3 mb-4">
+
+          <input
+            type="text"
+            placeholder="Buscar produto..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="flex-1 border p-3 rounded-xl"
+          />
+
+          <select
+            value={filterCategory}
+            onChange={(e) => setFilterCategory(e.target.value)}
+            className="border p-3 rounded-xl"
+          >
+            <option value="TODOS">Todas Categorias</option>
+            <option value="ANEL">ANEL</option>
+            <option value="BRINCO">BRINCO</option>
+            <option value="COLAR">COLAR</option>
+            <option value="PULSEIRA">PULSEIRA</option>
+            <option value="CONJUNTO">CONJUNTO</option>
+            <option value="ACESSORIOS">ACESSÓRIOS</option>
+          </select>
+
+        </div>
+
         <div className="grid md:grid-cols-2 gap-4">
 
-          {products.map((p) => {
+          {filteredProducts.map((p) => {
             const isOut = p.status === "esgotado";
 
             return (
@@ -288,9 +339,8 @@ export default function AdminPage() {
                 <div className="flex-1">
                   <p className="font-semibold text-gray-700">{p.name}</p>
 
-                  {/* ✅ CORREÇÃO AQUI */}
                   <p className="text-pink-600 font-bold">
-                    R$ {p.price.toLocaleString("pt-BR", {
+                    R$ {Number(p.price).toLocaleString("pt-BR", {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}
