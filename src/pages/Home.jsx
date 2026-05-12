@@ -22,7 +22,7 @@ export default function Home() {
       if (window.innerWidth < 768) {
         setItemsPerPage(6);
       } else {
-        setItemsPerPage(10);
+        setItemsPerPage(12);
       }
     };
 
