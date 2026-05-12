@@ -20,7 +20,7 @@ export default function Home() {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setItemsPerPage(5);
+        setItemsPerPage(6);
       } else {
         setItemsPerPage(10);
       }
