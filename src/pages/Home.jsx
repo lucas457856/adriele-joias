@@ -65,6 +65,14 @@ export default function Home() {
     loadProducts();
   }, []);
 
+  // 🔥 SUBIR PRO TOPO AO TROCAR DE PÁGINA
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [currentPage]);
+
   // 🔎 FILTRO
   const filteredProducts = products.filter((p) => {
     const matchCategory =
